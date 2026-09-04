@@ -1,6 +1,14 @@
 import users from "../mocks/user.mock.ts";
 import type { User } from "../types/user.type.ts";
 
-export function findAllUsers():User[]{
+export function findAllUsers(): User[] {
   return users;
+}
+
+export function findUserById(id: number): User {
+  const user = users.find((user) => user.id === id);
+
+  if (!user)
+    throw new Error(`Usuário de id ${id} não encontrado. `);
+  return user;
 }
