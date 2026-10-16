@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import * as UserService from "../services/user.service.ts";
-import users from '../mocks/user.mock.ts';
+import {} from '../mocks/user.mock.ts';
 import type { CreateUser, UpdateUser } from '../types/user.type.ts';
 
 export function getAllUsers(_request: Request, response: Response): void {
