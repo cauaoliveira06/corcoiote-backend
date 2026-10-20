@@ -1,66 +1,38 @@
-import {} from "../mocks/user.mock.ts";
+import prisma from "../lib/prisma.ts";
 import type { User, CreateUser, UpdateUser } from "../types/user.type.ts";
 
-export function findAllUsers(): User[] {
-  return users;
+// busca TODOS os usuários no banco, do mais novo para o mais antigo.
+export async function findAllUsers(): Promise<User[]> {
+  return await prisma.user.findMany({ orderBy: { createdAt: "desc" } });
 }
 
-export function findUserById(id: number): User {
-  const user = users.find((user) => user.id === id);
+// busca UM usuário pelo id. Se não existir, lança um erro.
+export async function findUserById(id: number): Promise<User> {
+  const user = await prisma.user.findUnique({ where: { id } });
 
-  if (!user)
-    throw new Error(`Usuário de id ${id} não encontrado. `);
+  if (!user) throw new Error(`Usuário de id ${id} não encontrado.`);
+
   return user;
 }
 
-export function insertUser({
-  name,
-  email,
-  password
-}: CreateUser): User {
-  users[users.length - 1].id;
-  const user: User = {
-    id: users[users.length - 1].id + 1,
-    name,
-    email,
-    password
-  };
-
-  users[users.length] = user;
-  return user;
+//cria um usuário. O id e o createdAt sao gerados pelo próprio banco.
+export async function insertUser(data: CreateUser): Promise<User> {
+  return await prisma.user.create({ data });
 }
 
-export function modifyUser(id: number, {
-  name,
-  email,
-  password
-}: UpdateUser): User {
-  const user = users.find(user => user.id === id);
+// Atualiza um usuário. Primeiro confere se ele existe.
+export async function modifyUser(id: number, data: UpdateUser): Promise<User> {
+  await findUserById(id);
 
-  if (!user)
-    throw new Error(`Usuário de id ${id} não encontrado. `);
-
-  if (name) user.name = name;
-  if (email) user.email = email;
-  if (password) user.password = password;
-
-  return user;
-
+  return await prisma.user.update({
+    where: { id },
+    data,
+  });
 }
 
-export function removeUser(id: number) {
-  function findIndex() {
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].id === id) {
-        return i;
-      }
-    }
-    return -1;
-  };
-  const index = findIndex();
+// Remove um usuário. Primeiro confere se ele existe.
+export async function removeUser(id: number): Promise<void> {
+  await findUserById(id);
 
-  if (index === -1)
-    throw new Error(`Usuário de id ${id} não encontrado. `);
-
-  users.splice(index, 1);
+  await prisma.user.delete({ where: { id } });
 }
