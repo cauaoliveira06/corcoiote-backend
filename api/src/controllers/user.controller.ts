@@ -1,42 +1,41 @@
 import type { Request, Response } from 'express';
 import * as UserService from "../services/user.service.ts";
-import {} from '../mocks/user.mock.ts';
 import type { CreateUser, UpdateUser } from '../types/user.type.ts';
 
-export function getAllUsers(_request: Request, response: Response): void {
-  const users = UserService.findAllUsers();
+export async function getAllUsers(_request: Request, response: Response): Promise<void> {
+  const users = await UserService.findAllUsers();
 
   response.status(200).json(users);
 }
 
-export function getUserById(request: Request, response: Response): void {
+export async function getUserById(request: Request, response: Response): Promise<void> {
   const id = Number(request.params.id);
-  const user = UserService.findUserById(id);
+  const user = await UserService.findUserById(id);
 
   response.status(200).json(user);
 }
 
-export function CreateUser(request: Request, response: Response): void {
+export async function CreateUser(request: Request, response: Response): Promise<void> {
   const { name, email, password } = request.body as CreateUser;
 
-  const user = UserService.insertUser({ name, email, password });
+  const user = await UserService.insertUser({ name, email, password });
   response.status(200).json(user);
 }
 
-export function UpdateUser(request: Request, response: Response): void {
+export async function UpdateUser(request: Request, response: Response): Promise<void> {
   const id = Number(request.params.id);
   const { name, email, password } = request.body as UpdateUser;
 
-  UserService.modifyUser(id, { name, email, password });
+  const user = await UserService.modifyUser(id, { name, email, password });
 
-  response.status(200).json(users);
+  response.status(200).json(user);
 
 }
 
-export function deleteUser(request: Request, response: Response): void {
+export async function deleteUser(request: Request, response: Response): Promise<void> {
   const id = Number(request.params.id); // (+request.params.id) subtitui Number.
 
-  UserService.removeUser(id);
+  await UserService.removeUser(id);
 
   response.status(204).send();
 }
