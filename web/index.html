@@ -8,9 +8,7 @@
 </head>
 
 <body>
-  <div>
-
-  </div>
+  <div></div>
   <!-- React  -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js">
   </script>
@@ -59,7 +57,15 @@
 
     const Title = () => <h1>Faturas</h1>;
 
-
+    const InvoiceRow = (props) => {
+      return <tr>
+        <td>{props.object.customer.name}</td>
+        <td>{props.object.amount}</td>
+        <td>{props.object.issueDate}</td>
+        <td>{props.object.dueDate}</td>
+        <td>{props.object.status}</td>
+      </tr>;
+    }
 
     const InvoiceTable = (props) => {
       return <>
@@ -74,13 +80,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Construtora Meridiano</td>
-              <td>R$ 1.250,00</td>
-              <td>10/10/2026</td>
-              <td>16/11/2026</td>
-              <td>Pendente</td>
-            </tr>
+            {invoices.map((invoice) => {
+              return <InvoiceRow key={invoice.id} object={invoice} />
+            })}
+
           </tbody>
         </table>
       </>
