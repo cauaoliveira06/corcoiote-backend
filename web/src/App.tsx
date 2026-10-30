@@ -38,6 +38,7 @@ const invoices: Invoice[] = [{
 //passando faturas via props:
 export default function App() {
   return <>
+    <h1>Corcoiote</h1>
     <InvoiceTable datas={invoices} />
   </>
 }
