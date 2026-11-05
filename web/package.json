@@ -1,8 +1,8 @@
 {
   "module": "module",
   "scripts": {
-    "dev":"vite",
-    "check":"tsc"
+    "dev": "vite",
+    "check": "tsc"
   },
   "dependencies": {
     "react": "^19.3.1",

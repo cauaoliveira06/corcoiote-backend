@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib":["ESNext","DOM" ],
+    "lib": ["ESNext", "DOM"],
     "module": "esnext",
-    "moduleResolution":"bundler",
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "strict": true,
     "erasableSyntaxOnly": true,
-    "allowImportingTsExtensions":true,
+    "verbatimModuleSyntax":true,
+    "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "include":["src"]
+  "include": ["src"]
 }
