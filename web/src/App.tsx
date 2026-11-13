@@ -4,7 +4,7 @@ import InvoicePage from './InvoicePage.tsx';
 import { useFormState } from 'react-dom';
 
 export default function App() {
-  const [invoice, setInvoices] = useState([]);
+  const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
     async function getInvoices() {

@@ -7,7 +7,7 @@ router.get('/', (_request, response) => {
   
   const invoices = findManyInvoices();
 
-  response.setHeader('Acess-Control-Allow-Origin','*');
+  response.setHeader('Access-Control-Allow-Origin','*');
   response.status(200).json(invoices);
 });
 
